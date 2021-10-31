@@ -43,6 +43,22 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # Graph 2 Parameters
+    df1 = df[df['genre']=='direct']
+    x1 = list(df1.columns[4:])
+    y1 = df1.groupby(x1).count()['message']
+    
+    # Graph 3 Parameters
+    df2 = df[df['genre']=='news']
+    x2 = list(df2.columns[4:])
+    y2 = df2.groupby(x2).count()['message']
+    
+    # Graph 4 Parameters
+    df3 = df[df['genre']=='social']
+    x3 = list(df1.columns[4:])
+    y3 = df3.groupby(x3).count()['message']
+    
+    
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -62,6 +78,67 @@ def index():
                 'xaxis': {
                     'title': "Genre"
                 }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x=x1,
+                    y=y1
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Direct Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    # 'title': "Direct Messages",
+                    'tickangle': 50
+                }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x=x2,
+                    y=y2
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of News Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    # 'title': "News Messages",
+                    'tickangle': 50
+                }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x=x3,
+                    y=y3
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Social Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    # 'title': "Social Messages",
+                    'tickangle': 50
+                },
+                'margins':  260
             }
         }
     ]
