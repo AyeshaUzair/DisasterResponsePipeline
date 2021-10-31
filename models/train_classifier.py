@@ -22,6 +22,26 @@ import pickle
 
 
 def load_data(database_filepath):
+    """
+    This function loads the table from the SQL database 
+    by taking the database filepath as input and returns the X and y objects 
+    for the machine learning model, along with all category names.
+
+    Parameters
+    ----------
+    database_filepath : TYPE str
+        DESCRIPTION. Filepath for the database containing the cleaned file
+
+    Returns
+    -------
+    X : TYPE object
+        DESCRIPTION. Dataframe containing message details
+    y : TYPE object 
+        DESCRIPTION. Dataframe containing all 36 output categories
+    category_names : TYPE list
+        DESCRIPTION. Names of all categories
+
+    """
     engine = create_engine('sqlite:///' + database_filepath)
     table_name = engine.table_names()
     df = pd.read_sql_table(table_name[0], con=engine)
@@ -32,6 +52,24 @@ def load_data(database_filepath):
     return X, y, category_names
 
 def tokenize(text):
+    """
+    This tokenizing function breaks down the string messages.
+    1. All text is made lower
+    2. All punctuation is removed
+    3. All stop words are removed
+    4. Text is lemmatized
+    
+    Parameters
+    ----------
+    text : TYPE str
+        DESCRIPTION. String messages to be tokenized
+
+    Returns
+    -------
+    tokenized_and_stopwords_lemm : TYPE list
+        DESCRIPTION. Tokenized list of words
+    
+    """
     tokenizer = RegexpTokenizer(r'\w+')
     tokenized = tokenizer.tokenize(text.lower())
     stop_words = set(stopwords.words('english'))
@@ -41,6 +79,19 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    This function initializes the machine learning model and builds the pipeline.
+    A Randomforest Multioutput classifier is used with TFidVectorizer for 
+    feature creation from the tokenized text.
+    Finally GridsearchCV is used to perform multiple iterations for 
+    hyper-parameter tuning to find the best model.
+
+    Returns
+    -------
+    cv : TYPE object
+        DESCRIPTION. Pipeline object for training 
+
+    """
         
     moc = MultiOutputClassifier(RandomForestClassifier())
 
@@ -58,6 +109,26 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    This function provides the precision , recall and f1 scores
+    on the test data of the trained model
+
+    Parameters
+    ----------
+    model : TYPE object
+        DESCRIPTION. Trained machine learning model
+    X_test : TYPE object
+        DESCRIPTION. Test input values 
+    Y_test : TYPE object
+        DESCRIPTION. Test output values
+    category_names : TYPE list
+        DESCRIPTION. Category names (36)
+
+    Returns
+    -------
+    None.
+
+    """
     y_pred = model.predict(X_test)
     results = pd.DataFrame(columns=['Category', 'f_score', 'precision', 'recall'])
     num = 0
@@ -79,6 +150,22 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Saves the trained model in a pickle file in the provided model filepath
+    
+    Parameters
+    ----------
+    model : TYPE object
+        DESCRIPTION. Trained machine learning model
+    model_filepath : TYPE str
+        DESCRIPTION. Path to store the model as a pickle file
+
+
+    Returns
+    -------
+    None.
+    
+    """
     joblib.dump(model, model_filepath)
 
 
