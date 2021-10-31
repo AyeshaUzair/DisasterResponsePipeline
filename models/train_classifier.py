@@ -1,47 +1,24 @@
 import sys
-# import libraries
+import numpy as np
 import pandas as pd
 import sqlite3
 from sqlalchemy import create_engine
-
-# download necessary NLTK data
-# import nltk
-# nltk.download(['punkt', 'wordnet'])
-
 import nltk
 nltk.download('stopwords')
-
-# import statements
 import re
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
-
 url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.metrics import precision_recall_fscore_support
-from sklearn.tree import DecisionTreeClassifier
-import pickle
-
-
-import numpy as np
-from sqlalchemy import create_engine
-#import nltk
+from sklearn.metrics import precision_recall_fscore_support, classification_report
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer 
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report , precision_recall_fscore_support
-from sklearn.model_selection import GridSearchCV
 import joblib
-from sklearn.multioutput import MultiOutputClassifier
+import pickle
 
 
 def load_data(database_filepath):
