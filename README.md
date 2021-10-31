@@ -45,6 +45,6 @@ The repository consists of the following files:
 
 ### 6. Links and Acknowledgements
 
-- ***Udacity***: This project is part of the data science nano degree I am doing in collaboration with Udacity.
-- ***Figure Eight***: The company providing the pre-labeled dataset for the analysis.
+- ***[Udacity](https://www.udacity.com)***: This project is part of the Data Scientist Nano Degree that I am doing in collaboration with Udacity.
+- ***[Figure Eight](http://figure-eight.com)***: The dataset containing the real-time disaster response messages and department categories is provided by this company.
 
